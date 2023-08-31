@@ -2,7 +2,7 @@ import React from 'react';
 import HomeHeader from '../Headers/HomeHeader';
 import HomeFooter from '../Footers/HomeFooter';
 import { Outlet } from 'react-router-dom';
-import XSNav from '../Components/xsNav';
+import XSNav from "../Components/XSNav.jsx"
 import { useState } from 'react';
 
 const HomeLayOut = () => {
