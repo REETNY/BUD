@@ -197,7 +197,7 @@ const Search = () => {
                 </div>
             </section>
         )
-    }else if(renderedData.length == 0 && fetchSearch1?.data || fetchSearch2?.data || fetchSearch3.isFetching || fetchSearch4?.data ){
+    }else if(renderedData.length == 0 && !(fetchSearch1?.isFetching) && !(fetchSearch2?.isFetching) && !(fetchSearch3.isFetching) && !(fetchSearch4?.isFetching) ){
         return (
             <section className="searchCont">
                 <header className="searchHead">
