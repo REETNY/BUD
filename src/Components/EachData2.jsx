@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import NoImg from "../assets/No-Img/NoImage.webp"
 
 const EachData2 = ({fetched, prevUrl}) => {
 
@@ -46,7 +47,7 @@ const EachData2 = ({fetched, prevUrl}) => {
     <Link className='eachDataLink' state={{myLink: prevUrl}} to={`/manga/${id}`}>
         <div className="eachDataComp">
             <div className="imgDets">
-                <img src={images.webp.image_url} alt="" />
+                <img onError={({nativeEvent}) => nativeEvent.srcElement.src = `${NoImg}`} src={images.webp.image_url} alt="" />
             </div>
             <div className="dataDets">
                 <div className="animeName">{title}</div>
@@ -66,7 +67,7 @@ const EachData2 = ({fetched, prevUrl}) => {
 
         <div className="absoluteContDets">
             <div className="imgCont">
-                <img src={images.webp.image_url} alt="" />
+                <img onError={({nativeEvent}) => nativeEvent.srcElement.src = `${NoImg}`} src={images.webp.image_url} alt="" />
             </div>
             <div className="detailsABS">
                 <div className="animeName2"><span className="mildHead">Title:</span> {title}</div>

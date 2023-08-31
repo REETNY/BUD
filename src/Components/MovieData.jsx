@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import NoImg from "../assets/No-Img/NoImage.webp"
 
 const MovieData = ({fetched, backUrl}) => {
 
@@ -40,7 +41,7 @@ const MovieData = ({fetched, backUrl}) => {
     <Link state={ {backLink : backUrl}} to={`/movies_tv/movie/${id}`} className='eachDataLink'>
         <div className="eachDataComp">
             <div className="imgDets">
-                <img src={imgPath+backdrop_path} alt="" />
+                <img onError={({nativeEvent}) => nativeEvent.srcElement.src = `${NoImg}`} src={imgPath+backdrop_path} alt="" />
             </div>
 
             <div className="dataDets">
@@ -62,7 +63,7 @@ const MovieData = ({fetched, backUrl}) => {
 
         <div className="absoluteContDets">
             <div className="imgCont">
-                <img src={imgPath+backdrop_path} alt="" />
+                <img onError={({nativeEvent}) => nativeEvent.srcElement.src = `${NoImg}`} src={imgPath+backdrop_path} alt="" />
             </div>
             <div className="detailsABS">
                 <div className="animeName2"><span className="mildHead">Title:</span> {title}</div>
