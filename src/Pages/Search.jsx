@@ -150,52 +150,101 @@ const Search = () => {
 
 
 
-    if(renderedData.length != 0)return (
-    <section className="searchCont">
-        <header className="searchHead">
-            <nav className="searchBox">
-                <ul className="searchSection">
-
-                    <li onClick={() => {
-                        changeType("type","Anime");
-                        renderedData = []
-                    }} style={currType == "Anime" ? activeType : {}} className="searchSelect">Anime</li>
-
-                    <li onClick={() => {
-                        changeType("type","Manga");
-                        renderedData = []
-                    }} style={currType == "Manga" ? activeType : {}} className="searchSelect">Manga</li>
-
-                    <li onClick={() => {
-                        changeType("type","Movies");
-                        renderedData = []
-                    }} style={currType == "Movies" ? activeType : {}} className="searchSelect">Movies</li>
-
-                    <li onClick={() => {
-                        changeType("type","TV");
-                        renderedData = []
-                    }} style={currType == "TV" ? activeType : {}} className="searchSelect">TV</li>
-                </ul>
-            </nav>
-
-            <div className="otherNavLink">
-                <ul className="selectPage">
-                    {fixedChanger}
-                </ul>
-            </div>
-        </header>
-
-        <div className="foundDatas">
-
-            <div className="foundDataHead">{currType} &nbsp; &gt;&gt;&gt; &nbsp; {searchKey}</div>
-
-            <div className="foundData">
-                {renderedData}
-            </div>
-            
-        </div>
-    </section>
-  )
+    if(renderedData.length != 0){
+        return (
+            <section className="searchCont">
+                <header className="searchHead">
+                    <nav className="searchBox">
+                        <ul className="searchSection">
+        
+                            <li onClick={() => {
+                                changeType("type","Anime");
+                                renderedData = []
+                            }} style={currType == "Anime" ? activeType : {}} className="searchSelect">Anime</li>
+        
+                            <li onClick={() => {
+                                changeType("type","Manga");
+                                renderedData = []
+                            }} style={currType == "Manga" ? activeType : {}} className="searchSelect">Manga</li>
+        
+                            <li onClick={() => {
+                                changeType("type","Movies");
+                                renderedData = []
+                            }} style={currType == "Movies" ? activeType : {}} className="searchSelect">Movies</li>
+        
+                            <li onClick={() => {
+                                changeType("type","TV");
+                                renderedData = []
+                            }} style={currType == "TV" ? activeType : {}} className="searchSelect">TV</li>
+                        </ul>
+                    </nav>
+        
+                    <div className="otherNavLink">
+                        <ul className="selectPage">
+                            {fixedChanger}
+                        </ul>
+                    </div>
+                </header>
+        
+                <div className="foundDatas">
+        
+                    <div className="foundDataHead">{currType} &nbsp; &gt;&gt;&gt; &nbsp; {searchKey}</div>
+        
+                    <div className="foundData">
+                        {renderedData}
+                    </div>
+                    
+                </div>
+            </section>
+        )
+    }else if(renderedData.length == 0 && fetchSearch1?.data || fetchSearch2?.data || fetchSearch3.isFetching || fetchSearch4?.data ){
+        return (
+            <section className="searchCont">
+                <header className="searchHead">
+                    <nav className="searchBox">
+                        <ul className="searchSection">
+        
+                            <li onClick={() => {
+                                changeType("type","Anime");
+                                renderedData = []
+                            }} style={currType == "Anime" ? activeType : {}} className="searchSelect">Anime</li>
+        
+                            <li onClick={() => {
+                                changeType("type","Manga");
+                                renderedData = []
+                            }} style={currType == "Manga" ? activeType : {}} className="searchSelect">Manga</li>
+        
+                            <li onClick={() => {
+                                changeType("type","Movies");
+                                renderedData = []
+                            }} style={currType == "Movies" ? activeType : {}} className="searchSelect">Movies</li>
+        
+                            <li onClick={() => {
+                                changeType("type","TV");
+                                renderedData = []
+                            }} style={currType == "TV" ? activeType : {}} className="searchSelect">TV</li>
+                        </ul>
+                    </nav>
+        
+                    <div className="otherNavLink">
+                        <ul className="selectPage">
+                            {fixedChanger.length != 0 ? fixedChanger : ""}
+                        </ul>
+                    </div>
+                </header>
+        
+                <div className="foundDatas">
+        
+                    <div className="foundDataHead">{currType} &nbsp; &gt;&gt;&gt; &nbsp; {searchKey}</div>
+        
+                    <div className="foundData">
+                        {renderedData.length != 0 ? renderedData : <span style={{fontSize: "19px", fontWeight: "700"}} className="noData">Nothing to Show in here</span> }
+                    </div>
+                    
+                </div>
+            </section>
+        )
+    }
 
   if(fetchSearch1.isFetching || fetchSearch2.isFetching || fetchSearch3.isFetching || fetchSearch4.isFetching ){
     return (<LoadingAnimation />)
