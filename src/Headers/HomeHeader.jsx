@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FaSearch } from "react-icons/fa";
 import { FaArrowLeft } from 'react-icons/fa';
 
-const HomeHeader = ({isHamActiveFunc, isOpenBool}) => {
+const HomeHeader = ({isHamActiveFunc, isOpenBool, func}) => {
 
   const [searchInput, setSearchInput] = useState("");  // for search inputs
 
@@ -52,6 +52,9 @@ const HomeHeader = ({isHamActiveFunc, isOpenBool}) => {
               <input type="text" id='smallDevInp' placeholder='type something in here' value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
               <FaSearch onClick={() => {
                 if(searchInput == "")return;
+                if(isOpenBool){
+                  func()
+                }
                 navigate(`/q?search=${searchInput}`);
                 setSmallSearch(() => false)
               }} role='button' tabIndex="0" className='callSearch' />

@@ -13,6 +13,9 @@ import LoadingAnimation from '../Externals/LoadingAnimation';
 
 const Search = () => {
 
+    let title = document.getElementsByTagName("title");
+    title[0].textContent = `BUD/Search`
+
     let [SP, setSP] = useSearchParams();
     let currLocate = useLocation();
 

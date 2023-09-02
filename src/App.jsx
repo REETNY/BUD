@@ -30,6 +30,8 @@ import More from './Pages/More';
 
 function App() {
 
+  console.log("data");
+
   const routesCreated = createBrowserRouter(createRoutesFromElements(
     <Route path='/' element={<HomeLayOut />} >
       <Route index element={<HomePage />} />

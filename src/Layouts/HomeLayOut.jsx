@@ -27,7 +27,7 @@ const HomeLayOut = () => {
 
   return (
     <section className="homePageSection">
-        <HomeHeader isOpenBool={isOpen} isHamActiveFunc={isHamActive} />
+        <HomeHeader isOpenBool={isOpen} func={closeHam} isHamActiveFunc={isHamActive} />
         <Outlet id="mainOutLet" />
         <XSNav func={closeHam} isOpenBool={isOpen}/>
         <HomeFooter />

@@ -9,6 +9,9 @@ import Error from '../Components/Error';
 
 const Movies = () => {
 
+    let title = document.getElementsByTagName("title");
+    title[0].textContent = `BUD/Movies`
+
     let [SP, setSP] = useSearchParams();
 
     let locationData = useLocation();

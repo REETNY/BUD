@@ -9,6 +9,9 @@ import Error from '../Components/Error';
 
 const TV_Show = () => {
 
+  let title = document.getElementsByTagName("title");
+  title[0].textContent = `BUD/TV`
+
   let [SP, setSP] = useSearchParams();
 
   let pageNum = SP.get("page") != undefined ? SP.get("page") : 1;

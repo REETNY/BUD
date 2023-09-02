@@ -8,6 +8,9 @@ import Error from '../Components/Error';
 
 const Manga = () => {
 
+  let title = document.getElementsByTagName("title");
+  title[0].textContent = `BUD/Manga`
+
   let [params, setParams] = useSearchParams();
   let arrayNum = ['a', "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", 'o', "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
