@@ -37,7 +37,6 @@ export default async function MovieFetch(queryKey){
             fetch: myData,
             totalItem: (rep.total_pages)
         }
-        console.log(arrData)
         return arrData;
     }catch(err){
         return err

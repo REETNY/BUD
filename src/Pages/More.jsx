@@ -1,5 +1,5 @@
 import React from 'react';
-import { useOutletContext, useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
 import { useQuery } from '@tanstack/react-query';
 import FetchMore from '../AsyncFetch/FetchMore';
@@ -9,7 +9,6 @@ import Lottie from "lottie-react"
 const More = () => {
 
   const imgPath = `https://image.tmdb.org/t/p/w500`;
-  let data = useOutletContext();
   let url = window.location.href;
   let screenWid = window.innerWidth;
 
@@ -25,25 +24,6 @@ const More = () => {
     }
   });
 
-  function runType(data, coun){
-    let counData = data["US"];
-    if(counData.buy == undefined){
-      return []
-    }else{
-      return(Object.values(counData.buy))
-    }
-  }
-
-  function runType2(data, coun){
-    let counData = data["US"];
-    console.log(counData.rent);
-    if(counData.rent == undefined){
-      return []
-    }else{
-      return(Object.values(counData.rent))
-    }
-  }
-
   let carouselWidth = 0;
 
   if(screenWid <= 600){
@@ -52,6 +32,28 @@ const More = () => {
     carouselWidth = screenWid - 200;
   }else{
     carouselWidth = 600
+  }
+
+  let watchProviderBuy;
+  let watchProviderRent;
+  let watchProviderFlatRate;
+
+  if(fetchData?.data?.watchProvide){
+    for(let each in fetchData.data.watchProvide.results){
+      if(each == fetchData.data.geoDatas.country){
+        let shortCut = (fetchData.data.watchProvide.results[fetchData.data.geoDatas.country])
+        watchProviderBuy = (shortCut?.buy != undefined && shortCut?.buy);
+        watchProviderRent = (shortCut?.rent != undefined && shortCut?.rent);
+        watchProviderFlatRate = (shortCut?.flatrate != undefined && shortCut?.flatrate);
+      }else if(each == "US"){
+        let shortCut = (fetchData.data.watchProvide.results["US"]);
+        watchProviderBuy = (shortCut?.buy != undefined && shortCut?.buy);
+        watchProviderRent = (shortCut?.rent != undefined && shortCut?.rent);
+        watchProviderFlatRate = (shortCut?.flatrate != undefined && shortCut?.flatrate);
+      }else{
+        continue
+      }
+    }
   }
 
   let bodyData = (url.includes("/movie/")) 
@@ -137,7 +139,6 @@ const More = () => {
       </div>
 
       {/* Other Images */}
-
       <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
         <span style={{width: "100%", textAlign: "center"}} className="label">Other Images</span>
 
@@ -203,11 +204,10 @@ const More = () => {
       </div>
 
       {/* watch provider */}
-
-     {fetchData?.data?.watchProvide?.results?.length > 0 && <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
+     {fetchData?.data?.watchProvide?.results != undefined && <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
         <span style={{width: "100%", textAlign: "center"}} className="label">Watch Provider</span>
 
-          {fetchData?.data?.watchProvide?.results?.buy != undefined && 
+          {watchProviderBuy.length > 0 && 
           <div style={{fontSize: "19px", fontWeight: "700", color: "white"}} className="actingBox">
             <span className="acting">Buy</span>
             <div style={{width: "100%", display: "flex", justifyContent: "center", marginTop: "20px"}} className="actingPic">
@@ -225,7 +225,7 @@ const More = () => {
             hasTrack={ false }
             >
               <SplideTrack>
-                {runType(fetchData?.data?.watchProvide?.results)?.map((item, index) => {
+                {(watchProviderBuy)?.map((item, index) => {
                   if(item.logo_path == null)return ""
                   return (<SplideSlide key={index}>
                     <div className="boxCast">
@@ -238,7 +238,7 @@ const More = () => {
             </div>
           </div>}
 
-          {fetchData?.data?.watchProvide?.results?.rent != undefined &&
+          {watchProviderRent.length > 0 &&
           <div style={{fontSize: "19px", fontWeight: "700", color: "white"}} className="actingBox">
             <span className="acting">Rent</span>
             <div style={{width: "100%", display: "flex", justifyContent: "center", marginTop: "20px"}} className="actingPic">
@@ -256,7 +256,38 @@ const More = () => {
             hasTrack={ false }
             >
               <SplideTrack>
-                {runType2(fetchData?.data?.watchProvide?.results)?.map((item, index) => {
+                {watchProviderRent?.map((item, index) => {
+                  if(item.logo_path == null)return ""
+                  return (<SplideSlide key={index}>
+                    <div className="boxCast">
+                      <img src={`${imgPath}${item.logo_path}`} style={{width: "95%", height: "95%", objectFit: "100%", borderRadius: "50%"}} alt="" />
+                    </div>
+                  </SplideSlide>)
+                })}
+              </SplideTrack>
+            </Splide>
+            </div>
+          </div>}
+
+          {watchProviderFlatRate.length > 0 &&
+          <div style={{fontSize: "19px", fontWeight: "700", color: "white"}} className="actingBox">
+            <span className="acting">Rent</span>
+            <div style={{width: "100%", display: "flex", justifyContent: "center", marginTop: "20px"}} className="actingPic">
+            <Splide
+            options={ {
+              rewind: true,
+              width : carouselWidth,
+              gap   : '0.5em',
+              autoplay: true,
+              type: "loop",
+              arrows: false,
+              perMove: 1
+            } }
+            tag='section'
+            hasTrack={ false }
+            >
+              <SplideTrack>
+                {watchProviderFlatRate?.map((item, index) => {
                   if(item.logo_path == null)return ""
                   return (<SplideSlide key={index}>
                     <div className="boxCast">
@@ -271,8 +302,7 @@ const More = () => {
       </div>}
 
       {/* similar */}
-
-      <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
+      {fetchData?.data?.similar?.results?.length > 0 && <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
         <span style={{width: "100%", textAlign: "center"}} className="label">Similar</span>
 
           <div style={{fontSize: "19px", fontWeight: "700", color: "white"}} className="actingBox">
@@ -306,21 +336,20 @@ const More = () => {
             </Splide>
             </div>
           </div>
-      </div>
+      </div>}
       
       {/* release date */}
-      <div className="each_Dets2">
+      {fetchData?.data?.CR[0]?.release_dates[0]?.release_date != undefined && <div className="each_Dets2">
         <span className="label">Release Date:</span>
-        <span className="labelData">{fetchData?.data?.releaseDate.results.map((item, index) => {
-          let counCode = fetchData?.data?.geoDatas?.cc != undefined ? fetchData?.data?.geoDatas?.cc : "US";
-          if(item.iso_3166_1 != counCode && index == fetchData?.data?.releaseDate.results.length - 1)return `No release date available for ${fetchData?.data?.geoDatas?.cc}`;
-          return item.iso_3166_1 == counCode ? item.release_dates[0].release_date : ""
-        })}</span>
-      </div>
+        <span className="labelData">
+          { 
+           ` ${fetchData?.data?.CR[0].release_dates[0].release_date.slice(0,10)} in ${fetchData?.data?.CR[0].iso_3166_1} `
+          }
+        </span>
+      </div>}
 
       {/* reviews */}
-
-      <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
+      {fetchData?.data?.reviews?.results.length > 0 &&<div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
 
           <div style={{fontSize: "19px", fontWeight: "700", color: "white"}} className="reviewBox">
             <span className="acting">Few Reviews:</span>
@@ -343,7 +372,7 @@ const More = () => {
               })}
             </div>
           </div>
-      </div>
+      </div>}
 
     </>
     :
@@ -429,8 +458,7 @@ const More = () => {
       </div>
 
       {/* Other Images */}
-
-      <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
+     {fetchData?.data?.otherImages?.logos.length > 0 && <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
         <span style={{width: "100%", textAlign: "center"}} className="label">Other Images</span>
 
           <div style={{fontSize: "19px", fontWeight: "700", color: "white"}} className="actingBox">
@@ -493,15 +521,13 @@ const More = () => {
             </div>
           </div>
       </div>
-
-      {/* watch provider */}
-
-     {fetchData?.data?.watchProvide?.results?.length > 0 && <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
+}
+       {/* watch provider */}
+     {fetchData?.data?.watchProvide?.results != {} && <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
         <span style={{width: "100%", textAlign: "center"}} className="label">Watch Provider</span>
 
-          {fetchData?.data?.watchProvide?.results?.buy != undefined && 
+        {fetchData?.data?.watchProvide != undefined && 
           <div style={{fontSize: "19px", fontWeight: "700", color: "white"}} className="actingBox">
-            <span className="acting">Buy</span>
             <div style={{width: "100%", display: "flex", justifyContent: "center", marginTop: "20px"}} className="actingPic">
             <Splide
             options={ {
@@ -517,7 +543,7 @@ const More = () => {
             hasTrack={ false }
             >
               <SplideTrack>
-                {runType(fetchData?.data?.watchProvide?.results)?.map((item, index) => {
+                {(fetchData?.data?.watchProvide?.results[fetchData?.data?.geoDatas?.country_code] == undefined ? fetchData?.data?.watchProvide?.results["US"] : fetchData?.data?.watchProvide?.results[fetchData?.data?.geoDatas?.country_code])?.flatrate?.map((item, index) => {
                   if(item.logo_path == null)return ""
                   return (<SplideSlide key={index}>
                     <div className="boxCast">
@@ -529,42 +555,11 @@ const More = () => {
             </Splide>
             </div>
           </div>}
-
-          {fetchData?.data?.watchProvide?.results?.rent != undefined &&
-          <div style={{fontSize: "19px", fontWeight: "700", color: "white"}} className="actingBox">
-            <span className="acting">Rent</span>
-            <div style={{width: "100%", display: "flex", justifyContent: "center", marginTop: "20px"}} className="actingPic">
-            <Splide
-            options={ {
-              rewind: true,
-              width : carouselWidth,
-              gap   : '0.5em',
-              autoplay: true,
-              type: "loop",
-              arrows: false,
-              perMove: 1
-            } }
-            tag='section'
-            hasTrack={ false }
-            >
-              <SplideTrack>
-                {runType2(fetchData?.data?.watchProvide?.results)?.map((item, index) => {
-                  if(item.logo_path == null)return ""
-                  return (<SplideSlide key={index}>
-                    <div className="boxCast">
-                      <img src={`${imgPath}${item.logo_path}`} style={{width: "95%", height: "95%", objectFit: "100%", borderRadius: "50%"}} alt="" />
-                    </div>
-                  </SplideSlide>)
-                })}
-              </SplideTrack>
-            </Splide>
-            </div>
-          </div>}
+          
       </div>}
 
-      {/* similar */}
-
-      <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
+    {/* similar */}
+    {fetchData?.data?.similar?.results?.length > 0 && <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
         <span style={{width: "100%", textAlign: "center"}} className="label">Similar</span>
 
           <div style={{fontSize: "19px", fontWeight: "700", color: "white"}} className="actingBox">
@@ -589,7 +584,7 @@ const More = () => {
                     <div className="boxCast">
                       <img src={`${imgPath}${item.backdrop_path}`} style={{width: "95%", height: "95%", objectFit: "100%", borderRadius: "50%"}} alt="" />
                         <span className="castDets">
-                          <div style={{fontSize: "13px", fontWeight: "800", width: "95%", textAlign: "center"}} className="castName">{item.title  || item.name}</div>
+                          <div style={{fontSize: "13px", fontWeight: "800", width: "95%", textAlign: "center"}} className="castName">{item.title}</div>
                         </span>
                     </div>
                   </SplideSlide>)
@@ -598,11 +593,11 @@ const More = () => {
             </Splide>
             </div>
           </div>
-      </div>
+      </div>}
 
-      {/* reviews */}
 
-      <div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
+       {/* reviews */}
+      {fetchData?.data?.reviews?.results.length > 0 &&<div style={{flexDirection: "column", rowGap: "15px", columnGap: "0px"}} className="each_Dets2">
 
           <div style={{fontSize: "19px", fontWeight: "700", color: "white"}} className="reviewBox">
             <span className="acting">Few Reviews:</span>
@@ -625,7 +620,7 @@ const More = () => {
               })}
             </div>
           </div>
-      </div>
+      </div>}
       
     </>
 
@@ -643,7 +638,7 @@ const More = () => {
     )
   }
 
-  if(fetchData?.data?.stack != undefined || fetchData?.data?.componentStack != undefined){
+  if(fetchData.data && fetchData?.data?.stack != undefined || fetchData?.data?.componentStack != undefined){
     return(<Error errorData={fetchData.data} rf={`${locate.pathname}${locate.search}`} />)
   }
 }

@@ -12,6 +12,9 @@ import LoadingAnimation from '../Externals/LoadingAnimation';
 
 const HomePage = () => {
 
+  let title = document.getElementsByTagName("title");
+  title[0].textContent = `BUD/Home`
+
   let animeStore = useRef([]);
   let mangaStore = useRef([]);
   // let [reset, seteset] = useState(0)

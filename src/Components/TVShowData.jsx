@@ -38,8 +38,6 @@ const TVShowData = ({fetched, prevLink}) => {
 
     const imgPath = `https://image.tmdb.org/t/p/w500`;
 
-    console.log(prevLink);
-
   return (
     <Link state={{backLink: prevLink}} to={`/movies_tv/tv/${id}`} className='eachDataLink'>
         <div className="eachDataComp">
