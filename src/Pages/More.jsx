@@ -40,8 +40,8 @@ const More = () => {
 
   if(fetchData?.data?.watchProvide){
     for(let each in fetchData.data.watchProvide.results){
-      if(each == fetchData.data.geoDatas.country){
-        let shortCut = (fetchData.data.watchProvide.results[fetchData.data.geoDatas.country])
+      if(each == fetchData.data.geoDatas.country.code){
+        let shortCut = (fetchData.data.watchProvide.results[fetchData.data.geoDatas.country.code])
         watchProviderBuy = (shortCut?.buy != undefined && shortCut?.buy);
         watchProviderRent = (shortCut?.rent != undefined && shortCut?.rent);
         watchProviderFlatRate = (shortCut?.flatrate != undefined && shortCut?.flatrate);
@@ -55,6 +55,8 @@ const More = () => {
       }
     }
   }
+
+  console.log(watchProviderBuy, watchProviderFlatRate, watchProviderRent);
 
   let bodyData = (url.includes("/movie/")) 
     ?
@@ -271,7 +273,7 @@ const More = () => {
 
           {watchProviderFlatRate.length > 0 &&
           <div style={{fontSize: "19px", fontWeight: "700", color: "white"}} className="actingBox">
-            <span className="acting">Rent</span>
+            <span className="acting">FlatRate</span>
             <div style={{width: "100%", display: "flex", justifyContent: "center", marginTop: "20px"}} className="actingPic">
             <Splide
             options={ {
@@ -638,7 +640,7 @@ const More = () => {
     )
   }
 
-  if(fetchData.data && fetchData?.data?.stack != undefined || fetchData?.data?.componentStack != undefined){
+  if(fetchData?.data?.stack != undefined || fetchData?.data?.componentStack != undefined){
     return(<Error errorData={fetchData.data} rf={`${locate.pathname}${locate.search}`} />)
   }
 }
