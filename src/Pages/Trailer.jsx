@@ -16,7 +16,7 @@ const Trailer = () => {
     <>
       {YTURL != undefined ? 
     <section className="dataTrailer">
-      <iframe src={YTURL} frameborder="0"></iframe>
+      <iframe src={YTURL} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="true"></iframe>
     </section> : <div style={{marginTop: "20px", color: "red", fontSize: "19px", fontWeight: "700"}} className="noVid">No Video is available!</div> }
     </>
   )

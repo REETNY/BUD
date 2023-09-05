@@ -35,8 +35,6 @@ const Trailer2 = () => {
     }
   })
 
-  console.log(currentKey);
-
   if(getKey.data && getKey.data.stack == undefined && getKey.data.componentStack == undefined){
     keyDatas.current = getKey?.data?.results?.filter((item, index) => {
       return item.type == "Trailer" ? item : false
@@ -56,7 +54,7 @@ const Trailer2 = () => {
       <section className="forTrailer2">
         
         <div className="iframeCont">
-        <iframe src={`https://www.youtube.com/embed/${keyDatas?.current[currentKey]?.key}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe src={`https://www.youtube.com/embed/${keyDatas?.current[currentKey]?.key}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="true"></iframe>
         </div>
 
       </section>

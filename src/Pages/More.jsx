@@ -34,9 +34,9 @@ const More = () => {
     carouselWidth = 600
   }
 
-  let watchProviderBuy;
-  let watchProviderRent;
-  let watchProviderFlatRate;
+  let watchProviderBuy = [];
+  let watchProviderRent = [];
+  let watchProviderFlatRate = [];
 
   if(fetchData?.data?.watchProvide){
     for(let each in fetchData.data.watchProvide.results){

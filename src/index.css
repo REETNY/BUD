@@ -499,17 +499,18 @@ ul a li{
     padding: 0px 30px;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 420px 1fr;
+    grid-template-rows: 430px 1fr;
 }
 
 #dataViewerHead{
     width: 100%;
     height: 100%;
-    background: rebeccapurple;
+    background: rgb(87, 85, 88);
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 30px 4fr 1fr;
-    row-gap: 8px;
+    grid-template-rows: 1fr 2fr 1fr;
+    row-gap: 5px;
+    border-radius: 15px;
     padding: 10px 25px;
 }
 
@@ -945,8 +946,10 @@ ul a li{
 }
 
 .forTrailer2 .iframeCont{
-    width: 60%;
-    height: 100%;
+    min-width: 60%;
+    min-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .iframeCont iframe{
@@ -977,7 +980,19 @@ ul a li{
 
 .backLink{
     width: 100;
-    height: 30px;
+    height: 100%;
+    text-decoration: none;
+}
+
+.backLink a{
+    color: #1ddde8;
+    text-decoration: none;
+    font-size: calc(10px + 1.5vmin);
+}
+
+.backLink a:hover{
+    color: red;
+    transform: translateX(5px);
 }
 
 .boxCast{
