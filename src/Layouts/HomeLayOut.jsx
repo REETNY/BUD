@@ -9,6 +9,11 @@ const HomeLayOut = () => {
 
   const [isOpen, setActive] = useState(false);  // for making link container active in small device 
 
+  const [isLogged, setLogged] = useState(() => {
+    let LS = JSON.parse(localStorage.getItem("isLogged")) || {};
+    return LS.isLogged != undefined ? LS.isLogged : false
+  });
+
   const isHamActive = (e) => {
     let allClasses = [...e.target.classList];
     if(allClasses.includes("active")){
@@ -24,12 +29,20 @@ const HomeLayOut = () => {
     setActive(() => false)
   }
 
+  const refresh = () => {
+    setLogged(() => true);
+  }
+
+  const refresh2 = () => {
+    setLogged(() => false);
+  }
+
 
   return (
     <section className="homePageSection">
-        <HomeHeader isOpenBool={isOpen} func={closeHam} isHamActiveFunc={isHamActive} />
-        <Outlet id="mainOutLet" />
-        <XSNav func={closeHam} isOpenBool={isOpen}/>
+        <HomeHeader userLogged={isLogged} userOut={refresh2} isOpenBool={isOpen} func={closeHam} isHamActiveFunc={isHamActive} />
+        <Outlet context={refresh} id="mainOutLet" />
+        <XSNav userOut={refresh2} userLogged={isLogged} func={closeHam} isOpenBool={isOpen}/>
         <HomeFooter />
     </section>
   )

@@ -105,14 +105,14 @@ html{
     height: fit-content;
     display: flex;
     height: 30px;
-    column-gap: 55px;
+    column-gap: 80px;
     padding-right: 25px;
 }
 
 .navLinks{
     display: flex;
     align-items: center;
-    column-gap: 35px;
+    column-gap: 25px;
 }
 
 .navLinks li{
@@ -204,45 +204,59 @@ html{
 .eachDataComp{
     width: 100%;
     height: 250px;
-    background: rgba(126, 120, 120, 0.644);
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 5px;
+    max-height: 250px;
+    overflow: hidden;
+    position: relative;
     border-radius: 8px;
+}
+
+.eachDataComp::after{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: block;
+    content: "";
+    top: 0%;
+    left: 0%;
+    background: rgb(0, 0, 0, .1);
 }
 
 .eachDataLink{
     text-decoration: none;
     color: black;
     position: relative;
+    /* overflow: hidden; */
+    z-index: 9;
 }
 
 .imgDets{
     width: 100%;
-    height: 180px;
-    position: relative;
+    height: 100%;
 }
 
 .imgDets img{
     width: 100%;
     height: 100%;
-    position: absolute;
-    object-fit: cover;
+    object-fit: 100%;
     object-position: top center;
-    border-radius: 8px;
+    /* border-radius: 8px; */
 }
 
 .dataDets{
+    position: absolute;
+    bottom: 0%;
+    left: 0%;
     width: 100%;
-    height: 70px;
-    padding: 10px 8px 0px;
+    height: 60px;
     display: grid;
     justify-content: space-between;
     align-items: center;
     grid-template-columns: 1fr 50px;
+    background: rgba(10, 10, 10, 0.3);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     column-gap: 5px;
+    padding: 0px 5px;
 }
 
 .animeName{
@@ -254,7 +268,7 @@ html{
     height: 45px;
     font-size: 14px;
     font-weight: 700;
-    color: #ecb318;
+    color: whitesmoke;
     line-height: 21px;
 }
 
@@ -332,20 +346,19 @@ html{
 /* absolute cont for each data comp */
 .absoluteContDets{
     position: absolute;
-    top: -60px;
-    left: 50%;
-    transform: translate(-50%, 0px);
     display: none;
     width: 230px;
-    height: auto;
+    height: 150px;
     background: #1b1b1b;
     box-shadow: 0px 0px 2.5px 3px black;
     z-index: 52000;
+    grid-template-columns: 2fr 2fr;
 }
 
 .absoluteContDets .imgCont{
     width: 100%;
-    height: 190px;
+    height: 100%;
+    overflow: hidden;
 }
 
 .absoluteContDets .imgCont img{
@@ -363,20 +376,22 @@ html{
 }
 
 .mildHead{
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 600;
     color: whitesmoke
 }
 
 .animeName2, .titleEng, .type, .popularity{
     color: #ecb318;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
+    max-height: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.eachDataLink:hover .absoluteContDets{
-    display: flex;
-    flex-direction: column;
+.contentWrapper:hover .absoluteContDets{
+    display: grid;
     row-gap: 8px;
 }
 
@@ -508,7 +523,7 @@ ul a li{
     background: rgb(87, 85, 88);
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-rows: 35px 3fr 1fr;
     row-gap: 5px;
     border-radius: 15px;
     padding: 10px 25px;
@@ -720,6 +735,10 @@ ul a li{
     border: 2px solid white;
     border-radius: 10px;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 3px;
 }
 
 .forMoviesOnly{
@@ -977,11 +996,19 @@ ul a li{
 
 /*  */
 
+.myFunc{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2.5fr;
+    align-items: center;
+}
 
 .backLink{
     width: 100;
     height: 100%;
     text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
 .backLink a{
@@ -994,6 +1021,28 @@ ul a li{
     color: red;
     transform: translateX(5px);
 }
+
+.func{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.like_watchFunc{
+    opacity: 0.3;
+  }
+
+  .func:hover > .like_watchFunc{
+    opacity: 1;
+  }
+
+  .like_watchFunc:hover{
+    opacity: 1;
+  }
 
 .boxCast{
     cursor: pointer;
@@ -1222,6 +1271,60 @@ ul a li{
 .btn_home:hover, .btn_refresh:hover{
     color: #1b1b1b;
 }
+
+/* user viewer css */
+
+.userViewer{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px 1fr;
+}
+
+.allUserData{
+    margin-top: 35px;
+    width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    padding: 0px 50px;
+}
+
+.eachDataForm{
+    width: 100%;
+    display: block;
+}
+
+.dataFormHead{
+    width: 100%;
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+.eachFormBox{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.boxesXont{
+    width: 100%;
+}
+
+.xontHead{
+    margin-bottom: 3px;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+#userOutlet{
+    width: 100%;
+    height: 100%;
+}
+
 
 /* media queries */
 
@@ -1584,6 +1687,10 @@ ul a li{
         font-weight: 600;
     }
 
+    .allUserData{
+        padding: 0px 10px;
+    }
+
 }
 
 @media only screen and (min-width: 530px) and (max-width: 700px){
@@ -1640,6 +1747,11 @@ ul a li{
     .homePageCont{
         width: 100%;
     }
+
+    .allUserData{
+        padding: 0px 10px;
+    }
+
 }
 
 
@@ -2403,4 +2515,97 @@ to {
     margin: auto;
     transform: rotateX(90deg) translateZ(-40px);
     filter: blur(12px);
-  }
+}
+
+
+
+
+
+
+
+
+.loginForm{
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.userForm{
+    width: 350px;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 14px;
+}
+
+.formInps{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    justify-content: center;
+}
+
+.formInps label{
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+}
+
+.formInps input{
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 0px 30px 0px 15px;
+    border: none;
+    background: none;
+    border-bottom: 2px solid whitesmoke;
+    outline: none;
+    color: #E4C560;
+}
+
+.userSettz{
+    display: none;
+    position: absolute;
+    background: red;
+    width: 100px;
+    height: 70px;
+    bottom: -85%;
+    left: 50%;
+    transform: translate(-50%, 85%);
+    flex-direction: column;
+    row-gap: 8px;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.userSettz1{
+    display: none;
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: -10px;
+    transform: translate(15px, -50%);
+}
+
+#isUser:hover > .userSettz{
+    display: flex;
+}
+
+#isUser:hover > .userSettz1{
+    display: flex;
+}
+.userSettz:hover, .userSettz1:hover{
+    display: flex;
+}

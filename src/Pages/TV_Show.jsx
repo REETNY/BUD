@@ -47,7 +47,7 @@ const TV_Show = () => {
 
     if(fetchTVShow.data && fetchTVShow.data.stack == undefined && fetchTVShow.data.componentStack == undefined){
       mappedShow = fetchTVShow.data.fetch.map((item, index) => {
-          return(<TVShowData prevLink={backUrl} fetched={item} key={index} />)
+          return(<TVShowData itemNo={index + 1} prevLink={backUrl} fetched={item} key={index} />)
       })
     }
 

@@ -50,7 +50,7 @@ const Anime = () => {
   let mappedAnime = [];
   if(fetchAnime.data && fetchAnime.data.stack == undefined){
     mappedAnime = fetchAnime.data?.fetch.map((item, index) => {
-      return (<EachData prevLink={refreshLink} fetched={item} key={index} />)
+      return (<EachData prevLink={refreshLink} itemNo={index + 1} fetched={item} key={index} />)
     })
   }
 

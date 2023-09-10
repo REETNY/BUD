@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import NoImg from "../assets/No-Img/NoImage.webp"
+import NoImg from "../assets/No-Img/NoImage.webp";
+import Like_WatchFunc from './Like_WatchFunc';
 
-const EachData2 = ({fetched, prevUrl}) => {
+const EachData2 = ({fetched, prevUrl, itemNo, forUser}) => {
 
     let {images, 
         title,  
@@ -12,6 +13,30 @@ const EachData2 = ({fetched, prevUrl}) => {
         score,
         mal_id: id
     } = fetched;
+
+    function ecc(){
+        let screenWidth = window.innerWidth;
+        if(screenWidth <= 950 && itemNo % 2 == 0){
+            return {
+                position: "absolute",
+                top: "-5px",
+                right: "8%",
+            }
+        }else if(screenWidth <= 950 && itemNo % 2 != 0){
+            return {
+                position: "absolute",
+                top: "-5px",
+                left: "8%",
+            }
+        }else{
+            return {
+                position: "absolute",
+                top: "0",
+                left: "50%",
+                transform: "translate(-50%, 0%)"
+            }
+        }
+    }
 
     let fakePercentage = Math.floor(score * 10);
 
@@ -44,33 +69,35 @@ const EachData2 = ({fetched, prevUrl}) => {
     }
     
   return (
-    <Link className='eachDataLink' state={{myLink: prevUrl}} to={`/manga/${id}`}>
-        <div className="eachDataComp">
-            <div className="imgDets">
-                <img onError={({nativeEvent}) => nativeEvent.srcElement.src = `${NoImg}`} src={images.webp.image_url} alt="" />
-            </div>
-            <div className="dataDets">
-                <div className="animeName">{title}</div>
-                <div className="animeRating">
-                    <div className="circularPercentage">
-                        <div className="semiCirclePer" style={firstAngle != 0 ? {transform: `rotate(${firstAngle}deg)`, display: `block`,  transition: `transform 2.5s linear 2.5s`, background: `${colorCode}`} : {}}></div>
-                        <div className="semiCirclePer" style={secondAngle != 0 ? {transform: `rotate(${secondAngle}deg)`, display: `block`, zIndex: `10`,  transition: `transform 5s linear 2.5s`,  background: `${colorCode}`} : {}}></div>
-                        <div className="semiCirclePer"></div>
+    <div className="contentWrapper" style={{width: "100%", height: "fit-content", position: "relative"}}>
+        <Link className='eachDataLink' state={{myLink: prevUrl}} to={`/manga/${id}`}>
+            <div className="eachDataComp">
+                <div className="imgDets">
+                    <img onError={({nativeEvent}) => nativeEvent.srcElement.src = `${NoImg}`} src={images.webp.image_url} alt="" />
+                </div>
+                <div className="dataDets">
+                    <div className="animeName">{title}</div>
+                    <div className="animeRating">
+                        <div className="circularPercentage">
+                            <div className="semiCirclePer" style={firstAngle != 0 ? {transform: `rotate(${firstAngle}deg)`, display: `block`,  transition: `transform 2.5s linear 2.5s`, background: `${colorCode}`} : {}}></div>
+                            <div className="semiCirclePer" style={secondAngle != 0 ? {transform: `rotate(${secondAngle}deg)`, display: `block`, zIndex: `10`,  transition: `transform 5s linear 2.5s`,  background: `${colorCode}`} : {}}></div>
+                            <div className="semiCirclePer"></div>
 
-                        <div className="fullCircle">
-                            <span className="rating">{fakePercentage}<sup>%</sup></span>
+                            <div className="fullCircle">
+                                <span className="rating">{fakePercentage}<sup>%</sup></span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
 
-        <div className="absoluteContDets">
+        <div className="absoluteContDets" style={ecc()}>
+            <Like_WatchFunc userFunc={forUser} idData={fetched.mal_id}  type={'manga'} />
             <div className="imgCont">
                 <img onError={({nativeEvent}) => nativeEvent.srcElement.src = `${NoImg}`} src={images.webp.image_url} alt="" />
             </div>
             <div className="detailsABS">
-                <div className="animeName2"><span className="mildHead">Title:</span> {title}</div>
                 {title_english && <div className="anime titleEng"><span className="mildHead">English Title:</span> {title_english}</div>}
                 <div className="type" style={{display: "flex", flexWrap: "wrap", alignItems: "center", columnGap: "8px"}}><span className="mildHead">Genre:</span> 
                     <ul style={{display: "flex", flexWrap: "wrap", columnGap: "8px", alignItems: "center"}}>
@@ -83,7 +110,8 @@ const EachData2 = ({fetched, prevUrl}) => {
                 
             </div>
         </div>
-    </Link>
+    </div>
+    
   )
 }
 

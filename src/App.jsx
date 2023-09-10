@@ -1,12 +1,13 @@
 import './App.css';
 
-import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route, redirect } from 'react-router-dom';
 
 // layouts
 import HomeLayOut from './Layouts/HomeLayOut';
 import DataViewerLayOut from './Layouts/DataViewerLayOut';
 import Movie_TVLayOut from './Layouts/Movie_TVLayOut';
 import DataViewer2 from './Layouts/DataViewer2';
+import UserViewLayOut from './Layouts/UserViewLayOut';
 
 // pages
 import HomePage from './Pages/HomePage';
@@ -18,6 +19,11 @@ import Manga from './Pages/Manga';
 import Movies from './Pages/Movies';
 import TV_Show from './Pages/TV_Show';
 import Search from './Pages/Search';
+import Liked from './Pages/Liked';
+import WatchLater from './Pages/WatchLater';
+import UserIndex from './Pages/UserIndex';
+import Login from './Pages/Login';
+import SignUp from './Pages/SignUp';
 
 import NotFound from './Pages/NotFound';
 
@@ -26,11 +32,27 @@ import Trailer2 from './Pages/Trailer2';
 import Extras from './Pages/Extras';
 import More from './Pages/More';
 
+//  check user last activity if it exist
+
+let checkUser = JSON.parse(localStorage.getItem("isLogged")) || {};
+
+if(checkUser != {}){
+  let timeExpiry = new Date(checkUser.timeDate).getTime();
+  let currentTime = new Date().getTime();
+  let maxHour = (24*60*60*1000);
+  let minus  = currentTime - timeExpiry;
+  
+  minus > maxHour ? localStorage.removeItem("isLogged"): console.log("logged");
+}
+
 
 
 function App() {
 
-  console.log("data");
+  const checkUser = () => {
+    let LS = JSON.parse(localStorage.getItem("isLogged")) || {};
+    return LS.isLogged != undefined ? LS.isLogged : false
+  }
 
   const routesCreated = createBrowserRouter(createRoutesFromElements(
     <Route path='/' element={<HomeLayOut />} >
@@ -57,7 +79,32 @@ function App() {
         <Route path='trailer' element={<Trailer2 />} />
       </Route>
 
+      <Route path='user' element={<UserViewLayOut />} >
+        <Route loader={() => {
+          if(!checkUser()){
+            return redirect('/signin?navTo=user&message=You need to login to access this page');
+          }
+          return null
+        }} index element={<UserIndex />} />
+        <Route loader={() => {
+          if(!checkUser()){
+            return redirect('/signin?navTo=user/watch&message=You need to login to access this page');
+          }
+          return null
+        }} path='watch' element={<WatchLater />} />
+        <Route loader={() => {
+          if(!checkUser()){
+            return redirect('/signin?navTo=user/liked&message=You need to login to access this page');
+          }
+          return null
+        }} path='liked' element={<Liked />} />
+      </Route>
+
       <Route path='*' element={<NotFound />} />
+
+      <Route path='signin' element={<Login />} />
+
+      <Route path='signup' element={<SignUp />} />
 
     </Route>
   ))

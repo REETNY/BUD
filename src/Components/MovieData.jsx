@@ -1,11 +1,36 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import NoImg from "../assets/No-Img/NoImage.webp"
+import NoImg from "../assets/No-Img/NoImage.webp";
+import Like_WatchFunc from './Like_WatchFunc';
 
-const MovieData = ({fetched, backUrl}) => {
+const MovieData = ({fetched, backUrl, itemNo, forUser}) => {
 
     let {vote_average, title, popularity, id, backdrop_path} = fetched;
     let fakePercentage = Math.floor(vote_average * 10);
+
+    function ecc(){
+        let screenWidth = window.innerWidth;
+        if(screenWidth <= 950 && itemNo % 2 == 0){
+            return {
+                position: "absolute",
+                top: "-5px",
+                right: "8%",
+            }
+        }else if(screenWidth <= 950 && itemNo % 2 != 0){
+            return {
+                position: "absolute",
+                top: "-5px",
+                left: "8%",
+            }
+        }else{
+            return {
+                position: "absolute",
+                top: "0",
+                left: "50%",
+                transform: "translate(-50%, 0%)"
+            }
+        }
+    }
 
     let deg = Math.floor(360*fakePercentage/100);
 
@@ -38,41 +63,47 @@ const MovieData = ({fetched, backUrl}) => {
     const imgPath = `https://image.tmdb.org/t/p/w500`;
 
   return (
-    <Link state={ {backLink : backUrl}} to={`/movies_tv/movie/${id}`} className='eachDataLink'>
-        <div className="eachDataComp">
-            <div className="imgDets">
-                <img onError={({nativeEvent}) => nativeEvent.srcElement.src = `${NoImg}`} src={imgPath+backdrop_path} alt="" />
-            </div>
+    <div className="contentWrapper" style={{width: "fit-content", height: "fit-content", position: "relative"}}>
+        <Link state={ {backLink : backUrl}} to={`/movies_tv/movie/${id}`} className='eachDataLink'>
+            <div className="eachDataComp">
 
-            <div className="dataDets">
-                <div className="animeName">{title}</div>
-                <div className="animeRating">
-                    <div className="circularPercentage">
-                        <div className="semiCirclePer" style={firstAngle != 0 ? {transform: `rotate(${firstAngle}deg)`, display: `block`,  transition: `transform 2.5s linear 2.5s`, background: `${colorCode}`} : {}}></div>
-                        <div className="semiCirclePer" style={secondAngle != 0 ? {transform: `rotate(${secondAngle}deg)`, display: `block`, zIndex: `10`,  transition: `transform 5s linear 2.5s`,  background: `${colorCode}`} : {}}></div>
-                        <div className="semiCirclePer"></div>
+                <div className="imgDets">
+                    <img onError={({nativeEvent}) => nativeEvent.srcElement.src = `${NoImg}`} src={imgPath+backdrop_path} alt="" />
+                </div>
 
-                        <div className="fullCircle">
-                            <span className="rating">{fakePercentage}<sup>%</sup></span>
+                <div className="dataDets">
+                    <div className="animeName">{title}</div>
+                    <div className="animeRating">
+                        <div className="circularPercentage">
+                            <div className="semiCirclePer" style={firstAngle != 0 ? {transform: `rotate(${firstAngle}deg)`, display: `block`,  transition: `transform 2.5s linear 2.5s`, background: `${colorCode}`} : {}}></div>
+                            <div className="semiCirclePer" style={secondAngle != 0 ? {transform: `rotate(${secondAngle}deg)`, display: `block`, zIndex: `10`,  transition: `transform 5s linear 2.5s`,  background: `${colorCode}`} : {}}></div>
+                            <div className="semiCirclePer"></div>
+
+                            <div className="fullCircle">
+                                <span className="rating">{fakePercentage}<sup>%</sup></span>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+        </Link>
 
-        </div>
+        <div className="absoluteContDets" style={ecc()}>
 
-        <div className="absoluteContDets">
+            <Like_WatchFunc userFunc={forUser} idData={fetched.id}  type={'movies'} />
+
             <div className="imgCont">
                 <img onError={({nativeEvent}) => nativeEvent.srcElement.src = `${NoImg}`} src={imgPath+backdrop_path} alt="" />
             </div>
             <div className="detailsABS">
                 <div className="animeName2"><span className="mildHead">Title:</span> {title}</div>
-                <div className="type"><span className="mildHead">Type:</span></div>
                 <div className="popularity"><span className="mildHead">Popularity:</span> {popularity}</div>
                 
             </div>
         </div>
-    </Link>
+    </div>
+    
   )
 }
 

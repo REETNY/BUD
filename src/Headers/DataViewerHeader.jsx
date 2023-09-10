@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom';
 import BackLink from '../Components/BackLink';
+import Like_WatchFunc from '../Components/Like_WatchFunc';
 
 const DataViewerHeader = ({headData, currType, prevLink}) => {
 
@@ -10,10 +11,18 @@ const DataViewerHeader = ({headData, currType, prevLink}) => {
         borderBottom: "2px solid #ecb318"
     }
 
+    console.log(headData.mal_id);
+
   return (
     <header id='dataViewerHead'>
 
-        <BackLink prevUrl={prevLink}/>
+        <div className="myFunc" style={{width: "100%", position: "relative"}}>
+            <BackLink prevUrl={prevLink}/>
+
+            <span className="func">
+                <Like_WatchFunc idData={headData.mal_id}  type={`${currType}`} />
+            </span>
+        </div>
 
         <section className="demonstrate">
 

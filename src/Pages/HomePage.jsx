@@ -2,6 +2,7 @@ import React from 'react';
 import HomePageHeader from '../Headers/HomePageHeader';
 import EachData from '../Components/EachData';
 import EachData2 from '../Components/EachData2';
+import Error from '../Components/Error';
 import { useQuery } from '@tanstack/react-query';
 import { useRef } from 'react';
 
@@ -24,7 +25,7 @@ const HomePage = () => {
     return new Promise((resolve) => setTimeout(resolve, wait))
   }
 
-  const {isFetched, isFetching, isError, isLoading, isSuccess, data} = useQuery({
+  const {isFetching, isError, isSuccess, data} = useQuery({
     queryKey: ["randomFetch"],
     enabled: animeStore.current.length == 0 ? true : false,
     queryFn: async() => {
@@ -114,6 +115,10 @@ const HomePage = () => {
 
     </section>
   )
+
+  if(isError){
+    return <Error errorData={data} rf={"/"} />
+  }
 
 }
 

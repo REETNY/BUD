@@ -50,7 +50,7 @@ const Manga = () => {
   let mappedManga = [];
   if(fetchAnime.data && fetchAnime.data.stack == undefined){
     mappedManga = fetchAnime.data?.fetch.map((item, index) => {
-      return (<EachData2 prevUrl={refreshLink} fetched={item} key={index} />)
+      return (<EachData2 itemNo={index+1} prevUrl={refreshLink} fetched={item} key={index} />)
     })
   }
 

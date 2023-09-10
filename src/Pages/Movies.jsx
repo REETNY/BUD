@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, QueryCache } from '@tanstack/react-query';
 import MovieFetch from '../AsyncFetch/MovieFetch';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import Anime_MangaHeader from '../Headers/Anime_MangaHeader';
@@ -10,14 +10,13 @@ import Error from '../Components/Error';
 const Movies = () => {
 
     let title = document.getElementsByTagName("title");
-    title[0].textContent = `BUD/Movies`
+    title[0].textContent = `BUD/Movies`;
 
     let [SP, setSP] = useSearchParams();
 
     let locationData = useLocation();
     let {pathname, search} = locationData;
     let backRoute = `${pathname+search}`;
-    
 
     let pageNum = SP.get("page") != undefined ? SP.get("page") : 1;
     let movType = SP.get("type") != undefined ? SP.get("type") :"popular";
@@ -48,19 +47,26 @@ const Movies = () => {
 
     if(fetchMovies.data && fetchMovies.data.stack == undefined){
         mappedMovie = fetchMovies.data.fetch.map((item, index) => {
-            return(<MovieData backUrl={backRoute} fetched={item} key={index} />)
+            return(<MovieData itemNo={index+1} backUrl={backRoute} fetched={item} key={index} />)
         })
     }
 
-    if(fetchMovies.data && fetchMovies.data.stack == undefined) return (
+    if(fetchMovies.data && fetchMovies.data.stack == undefined ) return (
     <section className="myMoviesSect">
         <Anime_MangaHeader oth1={500} currPage={pageNum} oth2={1} newDataFunc={genSearchParams} />
         
         <header className="forMoviesOnly">
             <ul className="moviesType">
-                <li onClick={() => genSearchParams("type", "popular")} style={movType == "popular" ? {background : "#800080"} : {}} className="movFilter">Popular</li>
-                <li onClick={() => genSearchParams("type", "top-rated")} style={movType == "top-rated" ? {background : "#800080"} : {}} className="movFilter">Top Rated</li>
-                <li onClick={() => genSearchParams("type", "upcoming")} style={movType == "upcoming" ? {background : "#800080"} : {}} className="movFilter">Upcoming</li>
+                <li onClick={() => {
+                    genSearchParams("type", "popular");
+
+                }} style={movType == "popular" ? {background : "#800080"} : {}} className="movFilter">Popular</li>
+                <li onClick={() => {
+                    genSearchParams("type", "top-rated");
+                }} style={movType == "top-rated" ? {background : "#800080"} : {}} className="movFilter">Top Rated</li>
+                <li onClick={() => {
+                    genSearchParams("type", "upcoming");
+                }} style={movType == "upcoming" ? {background : "#800080"} : {}} className="movFilter">Upcoming</li>
             </ul>
         </header>
 

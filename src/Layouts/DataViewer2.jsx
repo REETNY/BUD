@@ -5,6 +5,7 @@ import MOV_TVFetch from '../AsyncFetch/MOV_TVFetch';
 import BackLink from '../Components/BackLink';
 import LoadingAnimation from '../Externals/LoadingAnimation';
 import Error from '../Components/Error';
+import Like_WatchFunc from '../Components/Like_WatchFunc';
 
 const DataViewer2 = () => {
 
@@ -28,6 +29,8 @@ const DataViewer2 = () => {
   const active = {
     borderBottom: `2px solid white`,
   }
+
+  let currType = window.location.href.includes("/movie/") ? "movies" : "tv/series"
 
   let {vote_average, name, popularity, id, backdrop_path} = fetchData.data != undefined ? fetchData.data : [];
 
@@ -66,7 +69,14 @@ const DataViewer2 = () => {
      
       <header className="forMovies_tv">
 
-        <BackLink prevUrl={myPrevLink} />
+        <div className="myFunc" style={{width: "100%", position: "relative"}}>
+          <BackLink prevUrl={myPrevLink} />
+
+          <span className="func">
+            <Like_WatchFunc idData={fetchData.data.id}  type={`${currType}`} />
+          </span>
+        </div>
+        
 
         <div className="hero">
           <div className="heroCont">
