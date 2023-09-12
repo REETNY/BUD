@@ -3,9 +3,8 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { FaSearch, FaUserAlt } from "react-icons/fa";
 import { FaArrowLeft } from 'react-icons/fa';
-import { BiSolidUserCircle } from "react-icons/bi"
 
-const HomeHeader = ({isHamActiveFunc, isOpenBool, func, userLogged, userOut}) => {
+const HomeHeader = ({isHamActiveFunc, isOpenBool, func, userLogged}) => {
 
   const [searchInput, setSearchInput] = useState("");  // for search inputs
 
@@ -14,6 +13,8 @@ const HomeHeader = ({isHamActiveFunc, isOpenBool, func, userLogged, userOut}) =>
   const activeStyles = {
     borderBottom: "2px solid #ecb318"
   }
+
+  const userData = JSON.parse(localStorage.getItem("signedUser")) || [];
 
   const openSmall = () => {
     setSmallSearch(() => true);
@@ -27,7 +28,6 @@ const HomeHeader = ({isHamActiveFunc, isOpenBool, func, userLogged, userOut}) =>
 
   let locate = useLocation();
   let path = locate.pathname;
-
 
   return (
     <div className="homeHeadStyle">
@@ -84,23 +84,47 @@ const HomeHeader = ({isHamActiveFunc, isOpenBool, func, userLogged, userOut}) =>
             {!userLogged && <li className="links">
               <NavLink style={({isActive}) => isActive ? activeStyles : {}} to="signin" >Signin</NavLink>
             </li>}
+
+            {userLogged && <li className="links">
+              <NavLink style={({isActive}) => isActive ? activeStyles : {}} to="user" >{userData.username}</NavLink>
+            </li>}
+
             {userLogged && <li className="links" id='isUser' style={{position: "relative"}} >
-              <NavLink style={({isActive}) => isActive ? activeStyles : {}} to="user" >
-                <FaUserAlt style={{fontSize: "19px"}} />
-              </NavLink>
+                
+              {
+                userData.avatar == ""
+                ?
+                  <NavLink style={({isActive}) => isActive ? activeStyles : {}} to="settings" >
+                  <FaUserAlt style={{fontSize: "19px"}} />
+                  </NavLink>
+                :
 
-              <div className="userSettz1" >
+                <NavLink to="settings" style={({isActive}) => isActive ? activeStyles : {}}>
+                  <div className="userIcon" style={{width: "55px", height: "55px"}}>
+                    <div className="iconTab" style={{width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden", position: "relative"}}>
 
-                <span className="userLog" style={{border: "2px solid white", fontSize: "14px", fontWeight: "700", padding: "3px 8px", borderRadius: "13.5px"}} onClick={() => {
-                    userOut();
-                    func();
-                    localStorage.removeItem("isLogged");
-                    if(path.includes("/user")){
-                      navigate("/");
-                    }
+                      <span className="coloredItem">
+                        <div className="box"></div>
+                        <div className="box"></div>
+                        <div className="box"></div>
+                        <div className="box"></div>
+                      </span>
 
-                }}>Log Out</span>
-              </div>
+                      <div className="iconCont" style={{width: "100%", height: "100%", overflow: "hidden",  display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%", background: "rgb(225, 225, 225, .3)", zIndex: "9999"}}>
+
+                        <div className="iconImg" style={{width: "85%", height: "85%", overflow: "hidden", zIndex: "999"}}>
+
+                          <img src={userData.avatar} alt="" style={{width: "100%", height: "100%", borderRadius: "50%", zIndex: "99"}} />
+
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+                </NavLink>
+
+              }
 
             </li>}
           </ul>

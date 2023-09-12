@@ -16,7 +16,7 @@ export default async function RanAnime_Manga(){
         let iterator = 0; 
 
         for(let z = 0; z < 12; z++){
-            if(z % 2 == 0) await wait(1500);
+            if(z % 2 == 0) await wait(2000);
             let genRan = Math.floor(Math.random() * letters.length);
             let res = await RanAnimeApi.get(`/anime?letter=${letters[genRan]}`);
             let rep = res.data;
@@ -27,7 +27,7 @@ export default async function RanAnime_Manga(){
 
         if(iterator == 12){
             for(let z = 0; z < 12; z++){
-                if(z % 2 == 0) await wait(1500);
+                if(z % 2 == 0) await wait(2000);
                 let genRan = Math.floor(Math.random() * letters.length);
                 let res = await RanMangaApi.get(`/manga?letter=${letters[genRan]}`);
                 let rep = res.data;

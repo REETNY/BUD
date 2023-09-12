@@ -87,7 +87,7 @@ const UserIndex = () => {
             return item.for == "liked" && <MovieData forUser={refreshTab} fetched={item} key={index} backUrl={currentRoute} itemNo={index+1} />
         })
         watchMovies = tmdbType.data.MD.map((item, index) => {
-            return item.for == "watch" && <MovieData forUser={refreshTab} fetched={item} key={index} backUrl={currentRoute} itemNo={index+1} />
+            return item.for == "watch" && <MovieData forUser={refreshTab} fetched={item} key={index} backUrl={currentRoute} itemNo={index+2} />
         })
 
         likedSeries = tmdbType.data.TD.map((item, index) => {
@@ -95,7 +95,7 @@ const UserIndex = () => {
         })
 
         watchSeries = tmdbType.data.TD.map((item, index) => {
-            return item.for == "watch" && <TVShowData forUser={refreshTab} fetched={item} key={index} prevLink={currentRoute} itemNo={index+1} />
+            return item.for == "watch" && <TVShowData forUser={refreshTab} fetched={item} key={index} prevLink={currentRoute} itemNo={index+2} />
         })
     }
 

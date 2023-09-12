@@ -11,8 +11,6 @@ const DataViewerHeader = ({headData, currType, prevLink}) => {
         borderBottom: "2px solid #ecb318"
     }
 
-    console.log(headData.mal_id);
-
   return (
     <header id='dataViewerHead'>
 

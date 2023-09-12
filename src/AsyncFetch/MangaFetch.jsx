@@ -15,7 +15,6 @@ export default async function MangaFetch(queryKey){
         }
         return arrData
     }catch(err){
-        console.log(err);
         return err
     }
 }

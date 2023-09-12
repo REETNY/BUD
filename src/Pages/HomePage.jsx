@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRef } from 'react';
 
 import RanAnime_Manga from '../AsyncFetch/RanAnime_Manga';
-import { Link } from 'react-router-dom';
+import { Link, useRouteError } from 'react-router-dom';
 
 import LoadingAnimation from '../Externals/LoadingAnimation';
 
@@ -18,12 +18,10 @@ const HomePage = () => {
 
   let animeStore = useRef([]);
   let mangaStore = useRef([]);
+
   // let [reset, seteset] = useState(0)
 
-
-  function delay(wait) {
-    return new Promise((resolve) => setTimeout(resolve, wait))
-  }
+  let errors = useRouteError()
 
   const {isFetching, isError, isSuccess, data} = useQuery({
     queryKey: ["randomFetch"],
@@ -116,7 +114,7 @@ const HomePage = () => {
     </section>
   )
 
-  if(isError){
+  if(data[0] == undefined || data[0].length == 0 || isError || data[1] == undefined || data[1].length == 0){
     return <Error errorData={data} rf={"/"} />
   }
 

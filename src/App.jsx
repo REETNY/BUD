@@ -24,6 +24,7 @@ import WatchLater from './Pages/WatchLater';
 import UserIndex from './Pages/UserIndex';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
+import Settings from './Pages/Settings';
 
 import NotFound from './Pages/NotFound';
 
@@ -42,7 +43,7 @@ if(checkUser != {}){
   let maxHour = (24*60*60*1000);
   let minus  = currentTime - timeExpiry;
   
-  minus > maxHour ? localStorage.removeItem("isLogged"): console.log("logged");
+  minus > maxHour ? localStorage.removeItem("isLogged"): "";
 }
 
 
@@ -105,6 +106,13 @@ function App() {
       <Route path='signin' element={<Login />} />
 
       <Route path='signup' element={<SignUp />} />
+
+      <Route loader={() => {
+          if(!checkUser()){
+            return redirect('/signin?navTo=settings&message=You need to login to access this page');
+          }
+          return null
+        }} path='settings' element={<Settings />} />
 
     </Route>
   ))

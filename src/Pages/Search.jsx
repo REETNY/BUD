@@ -86,8 +86,6 @@ const Search = () => {
         color: "white"
     }
 
-    console.log(urlBack);
-
     let renderedData = [];
     let pageChanger = [];
     let fixedChanger = [];

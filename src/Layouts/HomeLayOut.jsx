@@ -14,6 +14,8 @@ const HomeLayOut = () => {
     return LS.isLogged != undefined ? LS.isLogged : false
   });
 
+  const [ref, setRef] = useState(0);
+
   const isHamActive = (e) => {
     let allClasses = [...e.target.classList];
     if(allClasses.includes("active")){
@@ -37,12 +39,22 @@ const HomeLayOut = () => {
     setLogged(() => false);
   }
 
+  const refs = () => {
+    setRef((value) => value+1 );
+  }
+
+  let settings = {
+    logInFunc : refresh,
+    logOutFunc: refresh2,
+    hamCloseFunc: closeHam,
+    refz: refs
+  }
 
   return (
     <section className="homePageSection">
         <HomeHeader userLogged={isLogged} userOut={refresh2} isOpenBool={isOpen} func={closeHam} isHamActiveFunc={isHamActive} />
-        <Outlet context={refresh} id="mainOutLet" />
-        <XSNav userOut={refresh2} userLogged={isLogged} func={closeHam} isOpenBool={isOpen}/>
+        <Outlet context={settings} id="mainOutLet" />
+        <XSNav userLogged={isLogged} func={closeHam} isOpenBool={isOpen}/>
         <HomeFooter />
     </section>
   )

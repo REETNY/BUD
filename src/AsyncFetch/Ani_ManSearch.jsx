@@ -7,7 +7,6 @@ export default async function Ani_ManSearch(queryKey){
     let page = queryKey[3];
     let keySearch = queryKey[2];
 
-    console.log(type, page, type);
     try{
         let res = await RanAnimeApi.get(`/${type}?q=${keySearch}&page=${page}`);
         let rep = res.data;

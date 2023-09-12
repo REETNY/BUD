@@ -89,8 +89,6 @@ export default async function FetchMore(queryKey){
             geoDatas: resp0
         }
 
-        console.log(fetchedData);
-
         return fetchedData
     }catch(err){
         return err

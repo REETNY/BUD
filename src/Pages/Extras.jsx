@@ -26,8 +26,6 @@ const Extras = () => {
     carouselWidth = 600
   }
 
-  console.log(screenWid)
-
   let bodyData = (url.includes("/movie/")) 
     ?
     <>

@@ -10,8 +10,6 @@ const Trailer = () => {
     YTURL = idData.trailer.embed_url != undefined ? idData.trailer.embed_url : idData.trailer.url?.replace("watch?v=", "embed/");
   }
 
-  console.log(YTURL);
-
   return (
     <>
       {YTURL != undefined ? 

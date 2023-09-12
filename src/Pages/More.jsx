@@ -56,8 +56,6 @@ const More = () => {
     }
   }
 
-  console.log(watchProviderBuy, watchProviderFlatRate, watchProviderRent);
-
   let bodyData = (url.includes("/movie/")) 
     ?
     <>

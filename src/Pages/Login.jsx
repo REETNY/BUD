@@ -11,29 +11,39 @@ const Login = () => {
 
     let [err, setErr] = useState({
         loginErr: ""
-    })
+    });
 
-    let myContextFunc = useOutletContext();
+    const [login, setLogin] = useState(false);
+
+    let {logInFunc} = useOutletContext();
 
     let navigate = useNavigate();
     let [param, setParam] = useSearchParams();
     let errMsg = param.get("message");
     let navTo = param.get("navTo");
 
-    let checkUserDets = (obj) => {
+    const delay = (val) => {
+        return new Promise((resolve) => setTimeout(resolve, val));
+    }
+
+
+    let checkUserDets = async(obj) => {
+        await delay(800)
         let dets = JSON.parse(localStorage.getItem("signedUser")) || {};
         if(dets.username == obj.username && dets.password == obj.password){
             let returnLogged = {
                 isLogged: true,
                 timeDate: new Date().toString()
             }
-            myContextFunc()
+            await delay(3000);
+            logInFunc();
             localStorage.setItem("isLogged", JSON.stringify(returnLogged));
             navigate(navTo != undefined ? `/${navTo}` : `/`)
         }else{
             setErr(() => {
                 return {loginErr: "No user with such combination found!"}
             })
+            setLogin(false);
         }
     }
 
@@ -59,7 +69,10 @@ const Login = () => {
                 {err.loginErr != "" && <span className="errTag" style={{color: "red", fontSize: "13px", fontWeight: "700"}} >{err.loginErr}</span> }
             </span>
 
-            <button onClick={() => checkUserDets(inpState)}>Sigin</button>
+            <button onClick={() => {
+                setLogin(true);
+                checkUserDets(inpState)
+            }} style={{height: "40px", borderRadius: "10px", background: "#dd00f3", fontSize: "17px", fontWeight: "700", letterSpacing: ".7px", color: "white", border: "none", cursor: "pointer"}}>{login ? "Signin in ..." : "Sign In"}</button>
         </form>
 
         <div className="haveAcc">

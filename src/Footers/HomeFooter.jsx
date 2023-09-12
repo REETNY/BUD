@@ -6,7 +6,6 @@ const HomeFooter = () => {
 
   let screenHeight = window.innerHeight;
   let screenWidth = window.innerWidth;
-  console.log(screenWidth)
 
   let date = new Date().getFullYear();
 
